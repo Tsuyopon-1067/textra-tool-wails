@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
-	"fmt"
 	"io"
 	"log"
 	"net/http"
@@ -37,7 +36,8 @@ func FetchTranslation(text string) []string {
 	client := conf.Client(ctx)
 	token, _ := conf.Token(ctx)
 	strToken := token.AccessToken
-	return helperFetchTranslation(client, strToken, envs, text)
+	splitText := ParseSentence(text)
+	return helperFetchTranslation(client, strToken, envs, splitText)
 }
 
 func helperFetchTranslation(client *http.Client, token string, envs Envs, text string) []string {

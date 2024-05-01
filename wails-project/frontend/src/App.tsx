@@ -15,7 +15,6 @@ function App() {
         result.forEach((element) => {
             newText += element + "\n";
         });
-        newText += "\n" + result.length;
         setTransText(newText);
     };
 

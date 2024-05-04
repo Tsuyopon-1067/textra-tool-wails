@@ -1,7 +1,7 @@
 package main
 
 import (
-	"changeme/golangtsuyopon"
+	textraapi "changeme/textraapi"
 	"context"
 	"fmt"
 )
@@ -28,5 +28,9 @@ func (a *App) Greet(name string) string {
 }
 
 func (a *App) FetchTranslation(text string) []string {
-	return golangtsuyopon.FetchTranslation(text)
+	return textraapi.FetchTranslation(text)
+}
+
+func (a *App) FetchArrangeSentences(text string) string {
+	return textraapi.Arrange(text)
 }

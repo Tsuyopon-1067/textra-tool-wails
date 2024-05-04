@@ -1,4 +1,4 @@
-package golangtsuyopon
+package textraapi
 
 func ParseSentence(text string) string {
 	splits := splitSentence(text)

@@ -30,3 +30,7 @@ func (a *App) Greet(name string) string {
 func (a *App) FetchTranslation(text string) []string {
 	return textraapi.FetchTranslation(text)
 }
+
+func (a *App) FetchArrangeSentences(text string) string {
+	return textraapi.Arrange(text)
+}

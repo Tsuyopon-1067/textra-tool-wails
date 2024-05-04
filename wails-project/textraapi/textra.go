@@ -1,4 +1,4 @@
-package golangtsuyopon
+package textraapi
 
 import (
 	"bytes"

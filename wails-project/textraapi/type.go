@@ -1,4 +1,4 @@
-package golangtsuyopon
+package textraapi
 
 type APIResponse struct {
 	ResultSet ResultSet `json:"resultset"`
@@ -54,4 +54,3 @@ type Translate struct {
 	Oov           interface{}   `json:"oov"`
 	Exception     string        `json:"exception"`
 }
-

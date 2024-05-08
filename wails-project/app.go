@@ -42,3 +42,12 @@ func (a *App) TranslateFormat(text string) string {
 func (a *App) EnglishJapaneseFormat(text string) string {
 	return textraapi.EnglishJapaneseFormat(text)
 }
+
+func (a *App) ReadApiKey() textraapi.ApiKey {
+	res, _ := textraapi.ReadApiKey()
+	return res
+}
+
+func (a *App) WriteApiKey(data textraapi.ApiKey) {
+	textraapi.WriteApiKey(data)
+}

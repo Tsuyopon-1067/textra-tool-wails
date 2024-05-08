@@ -39,13 +39,13 @@ type Process struct {
 	ReplaceBefore []interface{} `json:"replace-before"`
 	ShortBefore   []interface{} `json:"short-before"`
 	Preprocess    []interface{} `json:"preprocess"`
-	Translate     Translate     `json:"translate"`
+	Translate     TranslateType `json:"translate"`
 	ShortAfter    []interface{} `json:"short-after"`
 	ReplaceAfter  []interface{} `json:"replace-after"`
 	RegexAfter    []interface{} `json:"regex-after"`
 }
 
-type Translate struct {
+type TranslateType struct {
 	Reverse       []interface{} `json:"reverse"`
 	Specification []interface{} `json:"specification"`
 	TextS         string        `json:"text-s"`

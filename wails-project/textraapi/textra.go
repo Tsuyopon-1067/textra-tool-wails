@@ -23,7 +23,7 @@ type Envs struct {
 	Name         string
 }
 
-func FetchTranslation(text string) []string {
+func FetchTranslation(textLines string) []string {
 	envs := loadEnv()
 
 	ctx := context.Background()
@@ -36,8 +36,7 @@ func FetchTranslation(text string) []string {
 	client := conf.Client(ctx)
 	token, _ := conf.Token(ctx)
 	strToken := token.AccessToken
-	splitText := ParseSentence(text)
-	return helperFetchTranslation(client, strToken, envs, splitText)
+	return helperFetchTranslation(client, strToken, envs, textLines)
 }
 
 func helperFetchTranslation(client *http.Client, token string, envs Envs, text string) []string {

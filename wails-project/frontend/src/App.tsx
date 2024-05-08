@@ -8,81 +8,76 @@ import {
   Textarea,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import {
-  FetchArrangeSentences,
-  FetchTranslation,
-} from "../wailsjs/go/main/App";
+import { EnglishJapaneseFormat, Format, Translate, TranslateFormat } from "../wailsjs/go/main/App";
 import "./App.css";
 
 function App() {
-  const [englishText, setEnglishText] = useState("");
-  const [japaneseText, setJapaneseText] = useState("");
-  const updateTranslateText = (result: string[]) => {
-    let newText = "";
-    result.forEach((element) => {
-      newText += element + "\n";
-    });
-    setJapaneseText(newText);
-  };
-
-  function translate() {
-    const text = englishText;
-    FetchTranslation(text).then(updateTranslateText);
-  }
-
-  function arange() {
-    const text = englishText;
-    FetchArrangeSentences(text).then(setJapaneseText);
-  }
-  const [mode, setMode] = useState("0");
+  const [inputText, setInputText] = useState("");
+  const [resultText, setResultText] = useState("");
 
   return (
     <Grid
-      templateRows="repeat(10, 1fr)"
+      templateRows="repeat(6, 1fr)"
       templateColumns="repeat(2, 1fr)"
-      gap={10}
-      width="calc(100vw - 20px)"
-      height="calc(100vh - 20px)"
-      margin="10px"
+      gap="20px"
+      width="calc(100vw - 40px)"
+      height="calc(100vh - 40px)"
+      margin="20px"
     >
-      <GridItem rowSpan={1} colSpan={2}>
-        <RadioGroup onChange={setMode} value={mode}>
-          <Stack direction="row">
-            <Radio value="0" colorScheme="red">
-              文書翻訳
-            </Radio>
-            <Radio value="1">文書統合</Radio>
-          </Stack>
-        </RadioGroup>
-      </GridItem>
-      <GridItem rowSpan={8} colSpan={1}>
+      <GridItem rowSpan={5} colSpan={1}>
         <Textarea
-          onChange={(e: any) => setEnglishText(e.target.value)}
+          onChange={(e: any) => setInputText(e.target.value)}
           width="100%"
           height="100%"
-          value={englishText}
+          value={inputText}
         />
       </GridItem>
-      <GridItem rowSpan={8} colSpan={1}>
+      <GridItem rowSpan={5} colSpan={1}>
         <Textarea
-          value={japaneseText}
-          onChange={(e: any) => setJapaneseText(e.target.value)}
+          value={resultText}
+          onChange={(e: any) => setResultText(e.target.value)}
           width="100%"
           height="100%"
         />
       </GridItem>
       <GridItem rowSpan={1} colSpan={2}>
-        {mode === "0" ? (
-          <Button width="100%" height="100%" onClick={translate}>
+        <Grid
+          templateColumns="repeat(4, 1fr)"
+          gap="20px"
+          width="100%"
+          height="100%"
+        >
+          <Button width="100%" height="100%" onClick={
+            () => {
+              Format(inputText).then(setResultText);
+            }
+          }>
+            Format
+          </Button>
+          <Button width="100%" height="100%" onClick={
+            () => {
+              Translate(inputText).then(setResultText);
+            }
+          }>
             Translate
           </Button>
-        ) : (
-          <Button width="100%" height="100%" onClick={arange}>
-            Arrangement
+          <Button width="100%" height="100%" onClick={
+            () => {
+              TranslateFormat(inputText).then(setResultText);
+            }
+          }>
+            Translate + Format
           </Button>
-        )}
-      </GridItem>
-    </Grid>
+          <Button width="100%" height="100%" onClick={
+            () => {
+              EnglishJapaneseFormat(inputText).then(setResultText);
+            }
+          }>
+            Format English + Japanese
+          </Button>
+        </Grid>
+      </GridItem >
+    </Grid >
   );
 }
 

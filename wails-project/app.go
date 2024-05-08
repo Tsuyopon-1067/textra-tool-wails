@@ -27,10 +27,18 @@ func (a *App) Greet(name string) string {
 	return fmt.Sprintf("Hello %s, It's show time!", name)
 }
 
-func (a *App) FetchTranslation(text string) []string {
-	return textraapi.FetchTranslation(text)
+func (a *App) Translate(text string) string {
+	return textraapi.Translate(text)
 }
 
-func (a *App) FetchArrangeSentences(text string) string {
-	return textraapi.Arrange(text)
+func (a *App) Format(text string) string {
+	return textraapi.Format(text)
+}
+
+func (a *App) TranslateFormat(text string) string {
+	return textraapi.TranslateFormat(text)
+}
+
+func (a *App) EnglishJapaneseFormat(text string) string {
+	return textraapi.EnglishJapaneseFormat(text)
 }

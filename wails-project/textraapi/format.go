@@ -1,18 +1,37 @@
 package textraapi
 
-func ParseSentence(text string) string {
+import (
+	"strings"
+)
+
+func FormatEnglishJapanese(text string) string {
+	parts := strings.Split(text, "\n")
+	length := len(parts) / 2
+	res := ""
+	for i := 0; i < length; i++ {
+		res += parts[i]
+		res += "\n"
+		res += parts[i+length]
+		res += "\n"
+		res += "\n"
+	}
+	return res[0 : len(res)-1]
+}
+
+func FormatEnglish(text string) (string, []string) {
 	splits := splitSentence(text)
 	res := ""
 	for _, s := range splits {
 		res += s
 		res += "\n"
 	}
-	return res[0 : len(res)-1]
+	return res[0 : len(res)-1], splits
 }
 
 func splitSentence(sentence string) []string {
 	res := []string{}
 	chars := []rune{}
+	sentence = strings.ReplaceAll(sentence, "\n", " ")
 	for i := 0; i < len(sentence); i++ {
 		c := rune(sentence[i])
 		chars = append(chars, c)

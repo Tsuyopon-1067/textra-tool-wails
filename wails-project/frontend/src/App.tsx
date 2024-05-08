@@ -1,83 +1,42 @@
-import {
-  Button,
-  Grid,
-  GridItem,
-  Radio,
-  RadioGroup,
-  Stack,
-  Textarea,
-} from "@chakra-ui/react";
+import { Button, Grid, GridItem, Textarea } from "@chakra-ui/react";
 import { useState } from "react";
-import { EnglishJapaneseFormat, Format, Translate, TranslateFormat } from "../wailsjs/go/main/App";
+import {
+  EnglishJapaneseFormat,
+  Format,
+  Translate,
+  TranslateFormat,
+} from "../wailsjs/go/main/App";
 import "./App.css";
+import { MenuBar } from "./component/MenuBar";
+import { TranslateScreen } from "./component/TranslateScreen";
+import { ApiSettingsScreen } from "./component/ApiSettingsScreen";
 
+export type ScreenType = "Translate" | "ApiSettings";
 function App() {
-  const [inputText, setInputText] = useState("");
-  const [resultText, setResultText] = useState("");
-
+  const [currentScreen, setCurrentScreen] = useState("Translate" as ScreenType);
   return (
     <Grid
-      templateRows="repeat(6, 1fr)"
-      templateColumns="repeat(2, 1fr)"
-      gap="20px"
+      templateRows="100px 1fr"
       width="calc(100vw - 40px)"
       height="calc(100vh - 40px)"
       margin="20px"
     >
-      <GridItem rowSpan={5} colSpan={1}>
-        <Textarea
-          onChange={(e: any) => setInputText(e.target.value)}
-          width="100%"
-          height="100%"
-          value={inputText}
-        />
+      <GridItem rowSpan={1} colSpan={1}>
+        <MenuBar setCurrentScreen={setCurrentScreen} />
       </GridItem>
-      <GridItem rowSpan={5} colSpan={1}>
-        <Textarea
-          value={resultText}
-          onChange={(e: any) => setResultText(e.target.value)}
-          width="100%"
-          height="100%"
-        />
+      <GridItem rowSpan={1} colSpan={1}>
+        {(() => {
+          switch (currentScreen) {
+            case "Translate":
+              return <TranslateScreen />;
+            case "ApiSettings":
+              return <ApiSettingsScreen />;
+            default:
+              return <TranslateScreen />;
+          }
+        })()}
       </GridItem>
-      <GridItem rowSpan={1} colSpan={2}>
-        <Grid
-          templateColumns="repeat(4, 1fr)"
-          gap="20px"
-          width="100%"
-          height="100%"
-        >
-          <Button width="100%" height="100%" onClick={
-            () => {
-              Format(inputText).then(setResultText);
-            }
-          }>
-            Format
-          </Button>
-          <Button width="100%" height="100%" onClick={
-            () => {
-              Translate(inputText).then(setResultText);
-            }
-          }>
-            Translate
-          </Button>
-          <Button width="100%" height="100%" onClick={
-            () => {
-              TranslateFormat(inputText).then(setResultText);
-            }
-          }>
-            Translate + Format
-          </Button>
-          <Button width="100%" height="100%" onClick={
-            () => {
-              EnglishJapaneseFormat(inputText).then(setResultText);
-            }
-          }>
-            Format English + Japanese
-          </Button>
-        </Grid>
-      </GridItem >
-    </Grid >
+    </Grid>
   );
 }
 

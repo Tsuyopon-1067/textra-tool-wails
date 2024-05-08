@@ -56,7 +56,7 @@ type TranslateType struct {
 }
 
 type ApiKey struct {
-	ClientKey    string `yaml:"clientKey"`
-	ClientSecret string `yaml:"clientSecret"`
-	Name         string `yaml:"name"`
+	ClientKey    string `yaml:"clientKey" json:"clientKey"`
+	ClientSecret string `yaml:"clientSecret" json:"clientSecret"`
+	Name         string `yaml:"name" json:"name"`
 }

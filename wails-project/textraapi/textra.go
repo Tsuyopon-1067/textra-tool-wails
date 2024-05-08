@@ -8,9 +8,7 @@ import (
 	"log"
 	"net/http"
 	"net/url"
-	"os"
 
-	"github.com/joho/godotenv"
 	"golang.org/x/oauth2/clientcredentials"
 )
 
@@ -24,34 +22,38 @@ type Envs struct {
 }
 
 func FetchTranslation(textLines string) []string {
-	envs := loadEnv()
+	apiKey, err := ReadApiKey()
+	if err != nil {
+		log.Fatalf("Error reading API key: %v", err)
+		return nil
+	}
 
 	ctx := context.Background()
 	conf := &clientcredentials.Config{
-		ClientID:     envs.ClientKey,
-		ClientSecret: envs.ClientSecret,
-		TokenURL:     envs.BaseURL + "/oauth2/token.php",
+		ClientID:     apiKey.ClientKey,
+		ClientSecret: apiKey.ClientSecret,
+		TokenURL:     "https://mt-auto-minhon-mlt.ucri.jgn-x.jp/oauth2/token.php",
 	}
 
 	client := conf.Client(ctx)
 	token, _ := conf.Token(ctx)
 	strToken := token.AccessToken
-	return helperFetchTranslation(client, strToken, envs, textLines)
+	return helperFetchTranslation(client, strToken, apiKey, textLines)
 }
 
-func helperFetchTranslation(client *http.Client, token string, envs Envs, text string) []string {
+func helperFetchTranslation(client *http.Client, token string, apiKey ApiKey, text string) []string {
 
 	form := url.Values{
 		"access_token": {token},
-		"key":          {envs.ClientKey},
-		"api_name":     {envs.ApiName},
-		"api_param":    {envs.ApiParam},
-		"name":         {envs.Name},
+		"key":          {apiKey.ClientKey},
+		"api_name":     {"mt"},
+		"api_param":    {"generalNT_en_ja"},
+		"name":         {apiKey.Name},
 		"type":         {"json"},
 		"text":         {text},
 	}
 
-	resp, err := client.Post(envs.BaseURL+"/api/", "application/x-www-form-urlencoded", bytes.NewBufferString(form.Encode()))
+	resp, err := client.Post("https://mt-auto-minhon-mlt.ucri.jgn-x.jp/api/", "application/x-www-form-urlencoded", bytes.NewBufferString(form.Encode()))
 	if err != nil {
 		log.Fatalf("Error making request: %v", err)
 	}
@@ -72,22 +74,4 @@ func helperFetchTranslation(client *http.Client, token string, envs Envs, text s
 		res = append(res, sentence)
 	}
 	return res
-}
-
-func loadEnv() Envs {
-	err := godotenv.Load(".env")
-	if err != nil {
-		log.Fatalf("Error loading .env file: %v", err)
-	}
-
-	envs := Envs{
-		BaseURL:      os.Getenv("BASE_URL"),
-		ApiName:      os.Getenv("API_NAME"),
-		ApiParam:     os.Getenv("API_PARAM"),
-		ClientKey:    os.Getenv("CLIENT_KEY"),
-		ClientSecret: os.Getenv("CLIENT_SECRET"),
-		Name:         os.Getenv("NAME"),
-	}
-
-	return envs
 }

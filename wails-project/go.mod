@@ -5,7 +5,7 @@ go 1.21
 toolchain go1.21.0
 
 require (
-	github.com/joho/godotenv v1.5.1
+	github.com/go-yaml/yaml v2.1.0+incompatible
 	github.com/wailsapp/wails/v2 v2.7.1
 	golang.org/x/oauth2 v0.19.0
 )

@@ -14,10 +14,18 @@ export function Greet(arg1) {
   return window['go']['main']['App']['Greet'](arg1);
 }
 
+export function ReadApiKey() {
+  return window['go']['main']['App']['ReadApiKey']();
+}
+
 export function Translate(arg1) {
   return window['go']['main']['App']['Translate'](arg1);
 }
 
 export function TranslateFormat(arg1) {
   return window['go']['main']['App']['TranslateFormat'](arg1);
+}
+
+export function WriteApiKey(arg1) {
+  return window['go']['main']['App']['WriteApiKey'](arg1);
 }

@@ -54,3 +54,9 @@ type TranslateType struct {
 	Oov           interface{}   `json:"oov"`
 	Exception     string        `json:"exception"`
 }
+
+type ApiKey struct {
+	ClientKey    string `yaml:"clientKey"`
+	ClientSecret string `yaml:"clientSecret"`
+	Name         string `yaml:"name"`
+}

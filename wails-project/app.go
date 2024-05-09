@@ -43,6 +43,10 @@ func (a *App) EnglishJapaneseFormat(text string) string {
 	return textraapi.EnglishJapaneseFormat(text)
 }
 
+func (a *App) GenerateHtml(text string) string {
+	return textraapi.GenerateHtml(text)
+}
+
 func (a *App) ReadApiKey() textraapi.ApiKey {
 	res, _ := textraapi.ReadApiKey()
 	return res

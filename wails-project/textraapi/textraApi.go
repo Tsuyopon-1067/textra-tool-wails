@@ -17,9 +17,7 @@ func Format(text string) string {
 }
 
 func TranslateFormat(text string) string {
-	format, splits := FormatEnglish(text)
-	japaneseList := FetchTranslation(format)
-	englishList := splits
+	englishList, japaneseList := GetEnglishJapaneseSplit(text)
 	res := ""
 	for i := 0; i < len(englishList); i++ {
 		res += englishList[i]
@@ -32,4 +30,27 @@ func TranslateFormat(text string) string {
 
 func EnglishJapaneseFormat(text string) string {
 	return FormatEnglishJapanese(text)
+}
+
+func GenerateHtml(text string) string {
+	englishList, japaneseList := GetEnglishJapaneseSplit(text)
+	res := ""
+	for i := 0; i < len(englishList); i++ {
+		res += "<div class=\"bun\">\n"
+		res += "<div>\n"
+		res += "<p>\n"
+		res += englishList[i]
+		res += "</p>\n"
+		res += "<p>\n"
+		res += japaneseList[i]
+		res += "</p>\n"
+		res += "</div>\n"
+		res += "<div>\n"
+		res += "<p>\n"
+		res += "</p>\n"
+		res += "</div>\n"
+		res += "</div>\n"
+		res += "\n"
+	}
+	return res
 }

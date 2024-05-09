@@ -6,6 +6,8 @@ export function EnglishJapaneseFormat(arg1:string):Promise<string>;
 
 export function Format(arg1:string):Promise<string>;
 
+export function GenerateHtml(arg1:string):Promise<string>;
+
 export function Greet(arg1:string):Promise<string>;
 
 export function ReadApiKey():Promise<textraapi.ApiKey>;

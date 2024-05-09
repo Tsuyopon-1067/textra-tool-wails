@@ -3,6 +3,7 @@ import { useState } from "react";
 import {
   EnglishJapaneseFormat,
   Format,
+  GenerateHtml,
   Translate,
   TranslateFormat,
 } from "../../wailsjs/go/main/App";
@@ -37,7 +38,7 @@ export const TranslateScreen = () => {
       </GridItem>
       <GridItem rowSpan={1} colSpan={2}>
         <Grid
-          templateColumns="repeat(4, 1fr)"
+          templateColumns="repeat(5, 1fr)"
           gap="20px"
           width="100%"
           height="100%"
@@ -77,6 +78,15 @@ export const TranslateScreen = () => {
             }}
           >
             Format English + Japanese
+          </Button>
+          <Button
+            width="100%"
+            height="100%"
+            onClick={() => {
+              GenerateHtml(inputText).then(setResultText);
+            }}
+          >
+            Generate Html
           </Button>
         </Grid>
       </GridItem>

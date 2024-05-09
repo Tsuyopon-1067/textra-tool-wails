@@ -31,6 +31,7 @@ func FormatEnglish(text string) (string, []string) {
 func splitSentence(sentence string) []string {
 	res := []string{}
 	chars := []rune{}
+	sentence = strings.ReplaceAll(sentence, "-\n", "")
 	sentence = strings.ReplaceAll(sentence, "\n", " ")
 	for i := 0; i < len(sentence); i++ {
 		c := rune(sentence[i])
@@ -68,4 +69,11 @@ func getStartIdxOfSentence(str string, start int) int {
 
 func isCapitalLetter(c byte) bool {
 	return 'A' <= c && c <= 'Z'
+}
+
+func GetEnglishJapaneseSplit(text string) ([]string, []string) {
+	format, splits := FormatEnglish(text)
+	japaneseList := FetchTranslation(format)
+	englishList := splits
+	return englishList, japaneseList
 }

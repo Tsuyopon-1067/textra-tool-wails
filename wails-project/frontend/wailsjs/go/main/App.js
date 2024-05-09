@@ -10,6 +10,10 @@ export function Format(arg1) {
   return window['go']['main']['App']['Format'](arg1);
 }
 
+export function GenerateHtml(arg1) {
+  return window['go']['main']['App']['GenerateHtml'](arg1);
+}
+
 export function Greet(arg1) {
   return window['go']['main']['App']['Greet'](arg1);
 }

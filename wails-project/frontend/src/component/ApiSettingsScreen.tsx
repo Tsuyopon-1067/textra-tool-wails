@@ -1,12 +1,21 @@
 import { Button, FormControl, FormLabel, Grid, Input } from "@chakra-ui/react";
-import { useState } from "react";
-import { WriteApiKey } from "../../wailsjs/go/main/App";
+import { useEffect, useState } from "react";
+import { ReadApiKey, WriteApiKey } from "../../wailsjs/go/main/App";
 import { textraapi } from "../../wailsjs/go/models";
 
 export const ApiSettingsScreen = () => {
   const [apiKey, setApiKey] = useState("");
   const [apiSecret, setApiSecret] = useState("");
   const [userName, setUserName] = useState("");
+
+  useEffect(() => {
+    ReadApiKey().then((data) => {
+      setApiKey(data.clientKey);
+      setApiSecret(data.clientSecret);
+      setUserName(data.name);
+    });
+  }, []);
+
   const sendApiData = () => {
     const data: textraapi.ApiKey = {
       clientKey: apiKey,

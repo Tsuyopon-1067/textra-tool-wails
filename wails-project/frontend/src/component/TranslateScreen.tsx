@@ -1,5 +1,5 @@
 import { Button, Grid, GridItem, Textarea } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   EnglishJapaneseFormat,
   Format,
@@ -8,41 +8,12 @@ import {
   TranslateFormat,
 } from "../../wailsjs/go/main/App";
 import { CircularProgressIndicator } from "./CircularProgressIndicator";
+import { HandleButtonClick } from "./HandleButtonClick";
 
 export const TranslateScreen = () => {
   const [inputText, setInputText] = useState("");
   const [resultText, setResultText] = useState("");
   const [loadingState, setLoadingState] = useState(false);
-
-  const handleButtonClick = async (operationFunction: String) => {
-    setLoadingState(true);
-    try {
-      let result: string = "";
-      switch (operationFunction) {
-        case "format":
-          result = await Format(inputText);
-          break;
-        case "translate":
-          result = await Translate(inputText);
-          break;
-        case "translateFormat":
-          result = await TranslateFormat(inputText);
-          break;
-        case "englishJapaneseFormat":
-          result = await EnglishJapaneseFormat(inputText);
-          break;
-        case "generateHtml":
-          result = await GenerateHtml(inputText);
-          break;
-        default:
-          throw new Error("Invalid operation");
-      }
-      setResultText(result);
-      setLoadingState(false);
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   return (
     <>
@@ -81,7 +52,11 @@ export const TranslateScreen = () => {
               width="100%"
               height="100%"
               onClick={() => {
-                handleButtonClick("format");
+                HandleButtonClick(
+                  Format(inputText),
+                  setResultText,
+                  setLoadingState
+                );
               }}
             >
               Format
@@ -90,7 +65,11 @@ export const TranslateScreen = () => {
               width="100%"
               height="100%"
               onClick={() => {
-                handleButtonClick("translate");
+                HandleButtonClick(
+                  Translate(inputText),
+                  setResultText,
+                  setLoadingState
+                );
               }}
             >
               Translate
@@ -99,7 +78,11 @@ export const TranslateScreen = () => {
               width="100%"
               height="100%"
               onClick={() => {
-                handleButtonClick("translateFormat");
+                HandleButtonClick(
+                  TranslateFormat(inputText),
+                  setResultText,
+                  setLoadingState
+                );
               }}
             >
               Translate + Format
@@ -108,7 +91,11 @@ export const TranslateScreen = () => {
               width="100%"
               height="100%"
               onClick={() => {
-                handleButtonClick("englishJapaneseFormat");
+                HandleButtonClick(
+                  EnglishJapaneseFormat(inputText),
+                  setResultText,
+                  setLoadingState
+                );
               }}
             >
               Format English + Japanese
@@ -117,7 +104,11 @@ export const TranslateScreen = () => {
               width="100%"
               height="100%"
               onClick={() => {
-                handleButtonClick("generateHtml");
+                HandleButtonClick(
+                  GenerateHtml(inputText),
+                  setResultText,
+                  setLoadingState
+                );
               }}
             >
               Generate Html

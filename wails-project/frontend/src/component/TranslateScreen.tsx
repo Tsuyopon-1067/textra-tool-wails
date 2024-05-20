@@ -1,5 +1,5 @@
 import { Button, Grid, GridItem, Textarea } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   EnglishJapaneseFormat,
   Format,
@@ -12,10 +12,41 @@ import { CircularProgressIndicator } from "./CircularProgressIndicator";
 export const TranslateScreen = () => {
   const [inputText, setInputText] = useState("");
   const [resultText, setResultText] = useState("");
+  const [loadingState, setLoadingState] = useState(false);
+
+  const handleButtonClick = async (operationFunction: String) => {
+    setLoadingState(true);
+    try {
+      let result: string = "";
+      switch (operationFunction) {
+        case "format":
+          result = await Format(inputText);
+          break;
+        case "translate":
+          result = await Translate(inputText);
+          break;
+        case "translateFormat":
+          result = await TranslateFormat(inputText);
+          break;
+        case "englishJapaneseFormat":
+          result = await EnglishJapaneseFormat(inputText);
+          break;
+        case "generateHtml":
+          result = await GenerateHtml(inputText);
+          break;
+        default:
+          throw new Error("Invalid operation");
+      }
+      setResultText(result);
+      setLoadingState(false);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <>
-      <CircularProgressIndicator />
+      {loadingState && <CircularProgressIndicator />}
       <Grid
         templateRows="repeat(6, 1fr)"
         templateColumns="repeat(2, 1fr)"
@@ -50,7 +81,7 @@ export const TranslateScreen = () => {
               width="100%"
               height="100%"
               onClick={() => {
-                Format(inputText).then(setResultText);
+                handleButtonClick("format");
               }}
             >
               Format
@@ -59,7 +90,7 @@ export const TranslateScreen = () => {
               width="100%"
               height="100%"
               onClick={() => {
-                Translate(inputText).then(setResultText);
+                handleButtonClick("translate");
               }}
             >
               Translate
@@ -68,7 +99,7 @@ export const TranslateScreen = () => {
               width="100%"
               height="100%"
               onClick={() => {
-                TranslateFormat(inputText).then(setResultText);
+                handleButtonClick("translateFormat");
               }}
             >
               Translate + Format
@@ -77,7 +108,7 @@ export const TranslateScreen = () => {
               width="100%"
               height="100%"
               onClick={() => {
-                EnglishJapaneseFormat(inputText).then(setResultText);
+                handleButtonClick("englishJapaneseFormat");
               }}
             >
               Format English + Japanese
@@ -86,7 +117,7 @@ export const TranslateScreen = () => {
               width="100%"
               height="100%"
               onClick={() => {
-                GenerateHtml(inputText).then(setResultText);
+                handleButtonClick("generateHtml");
               }}
             >
               Generate Html

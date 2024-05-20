@@ -22,9 +22,10 @@ function App() {
       <AppBar setScreenName={setScreenName} />
       <Grid
         gridTemplateRows="3fr 1fr"
-        width="calc(100vw - 40px)"
-        height="calc(100vh - 40px)"
-        margin="20px"
+        width="100%"
+        height="90%"
+        padding="20px"
+        box-sizing="border-box"
       >
         <GridItem rowSpan={1} colSpan={1}>
           {(() => {

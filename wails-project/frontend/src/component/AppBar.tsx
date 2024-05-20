@@ -12,7 +12,14 @@ export const AppBar = (props: {
 }) => {
   return (
     <>
-      <Box width="100%" bg={useColorModeValue("gray.100", "gray.900")} px={6}>
+      <Box
+        display="grid"
+        width="100%"
+        height="10%"
+        alignItems="center"
+        bg={useColorModeValue("gray.100", "gray.900")}
+        px={6}
+      >
         <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
           <Heading as="h1" size="md">
             TexTra-Tool-Wails
